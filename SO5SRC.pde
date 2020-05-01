@@ -14,6 +14,7 @@ void draw() {
   grid();
   pointA(2, 4);
   renderFunction();
+  rectangelIntegration(4);
 }
 
 void cartesian() {
@@ -102,7 +103,9 @@ void keyPressed() {
 }
 
 
-void rectangelIntegration(){
-
-  
+void renderIntegral(){
+for (float i = -10; i<10; i+=precision) {
+    float z = poly(i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.125, 0, -2)*50;
+    //rect();
+  }
 }
