@@ -77,8 +77,6 @@ float poly(float x, float a, float b, float c, float d, float e, float f, float 
 // Output to a txt file.
 // Make a config file?
 // Numerical integration.
-// Make fewer or more dots.
-
 
 void renderFunction() {
   strokeWeight(1);
@@ -101,4 +99,10 @@ void keyPressed() {
   if (key=='4') {
     precision/=10;
   }
+}
+
+
+void rectangelIntegration(){
+
+  
 }
