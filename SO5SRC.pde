@@ -14,7 +14,7 @@ void draw() {
   grid();
   pointA(2, 4);
   renderFunction();
-  rectangelIntegration(4);
+  //rectangelIntegration(4);
 }
 
 void cartesian() {
@@ -63,18 +63,6 @@ void pointA(float x, float y, color c) {
   point(y*50, x*50);
 }
 
-//void renderFunction() {
-//  for (float i = -10; i<10; i+=0.0001) {
-//    pointA(i,poly(i,0,0,0,0,0,0,0,0,0,0.125,0,-2));
-//  }
-//}
-
-// returns the value of x given a tenth or lower polynomial. if something is 0, it just dissapears 
-float poly(float x, float a, float b, float c, float d, float e, float f, float g, float h, float i, float j, float k, float l) {
-  return a*pow(x, 10)+ b*pow(x, 9)+c*pow(x, 8)+d*pow(x, 7)+e*pow(x, 6)+f*pow(x, 5)+g*pow(x, 4)+h*pow(x, 4)+i*pow(x, 3)+j*pow(x, 2)+k*x+l;
-  //pointA(i,poly(i,0,0,0,0,0,0,0,0,0,0,0,0));
-}
-
 // Output to a txt file.
 // Make a config file?
 // Numerical integration.
@@ -83,7 +71,7 @@ void renderFunction() {
   strokeWeight(1);
   for (float i = -10; i<10; i+=precision) {
     pointA(i, poly(i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.125, 0, -2));
-    println(precision);
+    //println(precision);
   }
 }
 
@@ -102,10 +90,9 @@ void keyPressed() {
   }
 }
 
-
 void renderIntegral(){
 for (float i = -10; i<10; i+=precision) {
     float z = poly(i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.125, 0, -2)*50;
-    //rect();
+    //rect(); // from i; i+pre to poly(i) ; poly(i) not poly(i+pre)
   }
 }
