@@ -8,15 +8,14 @@ void setup() {
 void draw() {
   translate(0, height);
   rotate(3*PI/2); // this makes cordinates to (y;x) instead.
-  println((mouseY-500) +" ; "+(mouseX-500));
+  // println((mouseY-500) +" ; "+(mouseX-500));
   background(200);
   cartesian();
   grid();
-  
   //pointA(2, 4);
-  pointA(4, glassFunction(4));
+  pointA(5, glassFunction(5), #ff0000);
   renderFunction();
-  //rectangelIntegration(4);
+  renderTrapezoidalIntegral();
 }
 
 void cartesian() {
@@ -59,14 +58,16 @@ void pointA(float x, float y) { // this reverses the problem caused by rotate.
 
 void pointA(float x, float y, color c) { 
   strokeWeight(6);
-  fill(c);
+  stroke(c);
   point(y*50, x*50);
+  stroke(100);
 }
 
 // Output to a txt file.
 // Make a config file?
 // Numerical integration.
 
+// the function section.
 void renderFunction() {
   strokeWeight(1);
   for (float i = 0; i<20; i+=precision) {
@@ -104,6 +105,46 @@ float glassFunction(float j) { // returns the value of the function given some n
   return -1;
 }
 
+// The integral section.
+
+void renderLeftIntegral() {
+  for (float i = 0; i<20; i+=precision) {
+    rect(glassFunction(i)*50, i*50, -glassFunction(i)*50, precision*50);
+  }
+}
+
+float leftIntegral() {
+  float sum = 0;
+  for (float i = 0; i<20; i+=precision) {
+    sum += glassFunction(i)*precision;
+  }
+  return sum;
+}
+
+void renderAverageIntegral(){
+  for (float i = 0; i<20; i+=precision) {
+    rect(0, i*50, glassFunction(i+precision/2)*50, precision*50);
+  }
+}
+
+float averageIntegral() {
+  float sum = 0;
+  for (float i = 0; i<20; i+=precision) {
+    sum += glassFunction(i+precision/2)*precision;
+  }
+  return sum;
+}
+
+void renderTrapezoidalIntegral(){
+  for (float i = 0; i<20; i+=precision) {
+    quad(0, i*50, 0, (i+precision)*50, glassFunction(i+precision)*50,(i+precision)*50, glassFunction(i)*50,(i)*50 );
+  }
+}
+
+float trapezoidalIntegral(){return 3;}
+
+
+
 
 void keyPressed() {
   if (key=='1') {
@@ -113,9 +154,9 @@ void keyPressed() {
     precision/=2;
   }
   if (key=='3') {
-    precision*=10;
+    precision*=5;
   }
   if (key=='4') {
-    precision/=10;
+    precision/=5;
   }
 }
