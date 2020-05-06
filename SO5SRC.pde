@@ -15,7 +15,8 @@ void draw() {
   //pointA(2, 4);
   pointA(5, glassFunction(5), #ff0000);
   renderFunction();
-  renderTrapezoidalIntegral();
+
+  println(trapezoidalIntegral());
 }
 
 void cartesian() {
@@ -115,36 +116,41 @@ void renderLeftIntegral() {
 
 float leftIntegral() {
   float sum = 0;
-  for (float i = 0; i<20; i+=precision) {
-    sum += glassFunction(i)*precision;
+  for (float i = 0; i<13/precision; i++) {
+    sum += glassFunction(i*precision)*precision;
   }
   return sum;
 }
 
-void renderAverageIntegral(){
+void renderAverageIntegral() {
   for (float i = 0; i<20; i+=precision) {
     rect(0, i*50, glassFunction(i+precision/2)*50, precision*50);
   }
 }
 
+// save by chaninging glassfunciton parameter and for loop parameter. 
+
 float averageIntegral() {
   float sum = 0;
-  for (float i = 0; i<20; i+=precision) {
-    sum += glassFunction(i+precision/2)*precision;
+  for (float i = 0; i< 13/precision; i++) {
+    sum += glassFunction(precision*i + precision/2)*precision;
   }
   return sum;
 }
 
-void renderTrapezoidalIntegral(){
+void renderTrapezoidalIntegral() {
   for (float i = 0; i<20; i+=precision) {
-    quad(0, i*50, 0, (i+precision)*50, glassFunction(i+precision)*50,(i+precision)*50, glassFunction(i)*50,(i)*50 );
+    quad(0, i*50, 0, (i+precision)*50, glassFunction(i+precision)*50, (i+precision)*50, glassFunction(i)*50, (i)*50 );
   }
 }
 
-float trapezoidalIntegral(){return 3;}
-
-
-
+float trapezoidalIntegral() {
+  float sum = 0;
+  for (float i = 0; i<13/precision; i++) {
+    sum += precision * (glassFunction(i*precision+precision) + glassFunction(i*precision))/2;
+  }
+  return sum;
+}
 
 void keyPressed() {
   if (key=='1') {
