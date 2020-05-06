@@ -6,7 +6,7 @@ void setup() {
 }
 
 void draw() {
-  translate(width/2, height/2);
+  translate(0, height);
   rotate(3*PI/2); // this makes cordinates to (y;x) instead.
   println((mouseY-500) +" ; "+(mouseX-500));
   background(200);
@@ -17,38 +17,36 @@ void draw() {
   //rectangelIntegration(4);
 }
 
-void cartesian() {
+void cartesian(){
   stroke(0);
   strokeWeight(4);
 
-  line(-500, 0, 500, 0);
-  line(0, -500, 0, 500);
+  line(-1000, 0, 1000, 0);
+  line(0, -1000, 0, 1000);
 
-  for (int i=0; i<20; i++) {
-    if (i!=10) {
-      line(0, -500+50*i, 10, -500+50*i);
-      line(-500+50*i, 0, -500+50*i, 10);
+  for (int i=0; i<40; i++) {
+    if (i!=0) {
+      line(0, 0+50*i, 10, 0+50*i);
+      line(0+50*i, 0, 0+50*i, 10);
 
       fill(0);
       rotate(-3*PI/2);
-      text(10-i, 20, -500+50*i);
-      text(-10+i, -500+50*i, 20);
+      text(20-i, 20, -1000+50*i); // up
+      text(-10+i, -500+50*i, -25); // right
       rotate(3*PI/2);
     }
   }
 }
 
-
 void grid() {
-
   stroke(100);
   strokeWeight(1);
-  for (int i=0; i<20; i++) {
-    line(-500, -500+50*i, 500, -500+50*i);
+  for (int i=0; i<40; i++) {
+    line(-1000, -1000+50*i, 1000, -1000+50*i);
   }
 
-  for (int i=0; i<20; i++) {
-    line(-500+50*i, -500, -500+50*i, 500);
+  for (int i=0; i<40; i++) {
+    line(-1000+50*i, -1000, -1000+50*i, 1000);
   }
 }
 
@@ -70,8 +68,6 @@ void pointA(float x, float y, color c) {
 void renderFunction() {
   strokeWeight(1);
   for (float i = -10; i<10; i+=precision) {
-    pointA(i, poly(i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.125, 0, -2));
-    //println(precision);
   }
 }
 
@@ -87,12 +83,5 @@ void keyPressed() {
   }
   if (key=='4') {
     precision/=10;
-  }
-}
-
-void renderIntegral(){
-for (float i = -10; i<10; i+=precision) {
-    float z = poly(i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.125, 0, -2)*50;
-    //rect(); // from i; i+pre to poly(i) ; poly(i) not poly(i+pre)
   }
 }
