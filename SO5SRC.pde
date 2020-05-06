@@ -12,12 +12,14 @@ void draw() {
   background(200);
   cartesian();
   grid();
-  pointA(2, 4);
+  
+  //pointA(2, 4);
+  pointA(4, glassFunction(4));
   renderFunction();
   //rectangelIntegration(4);
 }
 
-void cartesian(){
+void cartesian() {
   stroke(0);
   strokeWeight(4);
 
@@ -67,9 +69,41 @@ void pointA(float x, float y, color c) {
 
 void renderFunction() {
   strokeWeight(1);
-  for (float i = -10; i<10; i+=precision) {
+  for (float i = 0; i<20; i+=precision) {
+    if (0<i && i<1.97046) {
+      pointA(i, 1/(i+0.5));
+      //println("hi");
+    }
+    if (i>1.97046 && i<6.91583) {
+      pointA(i, (exp(i)/1500)+0.4);
+    }
+
+    if (i>6.91583 && i<11.9898) {
+      pointA(i, -i*i+19*i-82.5);
+    }
+
+    if (i>11.9898 && i<13) {
+      pointA(i, tan(i+1)+1.1);
+    }
   }
 }
+
+float glassFunction(float j) { // returns the value of the function given some number.
+  if (0<j && j<1.97046) {
+    return  1/(j+0.5);
+  }
+  if (j>1.97046 && j<6.91583) {
+    return (exp(j)/1500)+0.4;
+  }
+  if (j>6.91583 && j<11.9898) {
+    return -j*j+19*j-82.5;
+  }
+  if (j>11.9898 && j<13) {
+    return tan(j+1)+1.1;
+  }
+  return -1;
+}
+
 
 void keyPressed() {
   if (key=='1') {
