@@ -128,8 +128,6 @@ void renderAverageIntegral() {
   }
 }
 
-// save by chaninging glassfunciton parameter and for loop parameter. 
-
 float averageIntegral() {
   float sum = 0;
   for (float i = 0; i< 13/precision; i++) {
