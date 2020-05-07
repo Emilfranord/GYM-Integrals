@@ -12,12 +12,22 @@ void setup() {
 void draw() {
   translate(0, height);
   rotate(3*PI/2); // this makes cordinates to (y;x) instead.
-  // println((mouseY) +" ; "+(mouseX));
+  println((mouseY) +" ; "+(mouseX));
   background(200);
   cartesian();
   grid();
   sidebar();
   renderFunction();
+
+  if (showLeft) {
+    renderLeftIntegral();
+  }
+  if (showAverage) {
+    renderAverageIntegral();
+  }
+  if (showTrapetz) {
+    renderTrapezoidalIntegral();
+  }
 }
 
 void cartesian() {
@@ -74,21 +84,7 @@ void renderFunction() {
   strokeWeight(1);
   stroke(0);
   for (float i = 0; i<20; i+=precision) {
-    if (0<i && i<1.97046) {
-      pointA(i, 1/(i+0.5));
-      //println("hi");
-    }
-    if (i>1.97046 && i<6.91583) {
-      pointA(i, (exp(i)/1500)+0.4);
-    }
-
-    if (i>6.91583 && i<11.9898) {
-      pointA(i, -i*i+19*i-82.5);
-    }
-
-    if (i>11.9898 && i<13) {
-      pointA(i, tan(i+1)+1.1);
-    }
+    pointA(i, glassFunction(i));
   }
 }
 
@@ -175,20 +171,33 @@ void mousePressed() {
     showSimpsons = false;
   }
 
-  if (mouseY >340 && mouseY <350 && mouseX < 1100 && mouseX >1000) { // related to show Average
+  if (mouseY >440 && mouseY <450 && mouseX < 1100 && mouseX >1000) { // related to show Average
     showLeft = false;
     showAverage = true;
     showTrapetz = false;
     showSimpsons = false;
   }
-  if (mouseY >340 && mouseY <350 && mouseX < 1100 && mouseX >1000) { // related to show Average
+  if (mouseY >480 && mouseY <500 && mouseX < 1100 && mouseX >1000) { // related to show Trapetz
     showLeft = false;
-    showAverage = true;
-    showTrapetz = false;
+    showAverage = false;
+    showTrapetz = true;
     showSimpsons = false;
+  }
+
+  if (mouseY >540 && mouseY <560 && mouseX < 1100 && mouseX >1000) { // related to show Simpsons
+    showLeft = false;
+    showAverage = false;
+    showTrapetz = false;
+    showSimpsons = true;
+  }
+
+  if (mouseY >640 && mouseY <660 && mouseX < 1100 && mouseX >1000) { // related to show Simpsons
+  precision/=2;
+  }
+    if (mouseY >690 && mouseY <700 && mouseX < 1100 && mouseX >1000) { // related to show Simpsons
+  precision*=2;
   }
 }
-
 
 // sidebar part
 
