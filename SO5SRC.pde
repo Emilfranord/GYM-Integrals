@@ -148,21 +148,6 @@ float trapezoidalIntegral() {
   return sum;
 }
 
-void keyPressed() {
-  if (key=='1') {
-    precision*=2;
-  }
-  if (key=='2') {
-    precision/=2;
-  }
-  if (key=='3') {
-    precision*=5;
-  }
-  if (key=='4') {
-    precision/=5;
-  }
-}
-
 void mousePressed() {
   if (mouseY >390 && mouseY <400 && mouseX < 1100 && mouseX >1000) { // related to show left
     showLeft = true;
