@@ -3,6 +3,7 @@ boolean showLeft = false;
 boolean showAverage = false;
 boolean showTrapetz = false;
 boolean showSimpsons = false;
+int highestRecortedTime = 0;
 
 void setup() {
   size(1200, 1000);
@@ -12,7 +13,7 @@ void setup() {
 void draw() {
   translate(0, height);
   rotate(3*PI/2); // this makes cordinates to (y;x) instead.
-  println((mouseY) +" ; "+(mouseX));
+  //println((mouseY) +" ; "+(mouseX));
   background(200);
   cartesian();
   grid();
@@ -28,7 +29,24 @@ void draw() {
   if (showTrapetz) {
     renderTrapezoidalIntegral();
   }
+
+  
+  
+  int t = millis();
+  trapezoidalIntegral();
+  println(millis()-t);
+  
+  //if((millis()-t)<highestRecortedTime){
+  //println(millis()-t);
+  //highestRecortedTime = millis()-t;
+  //}
+  
 }
+
+
+
+
+
 
 void cartesian() {
   stroke(0);
@@ -177,10 +195,10 @@ void mousePressed() {
   }
 
   if (mouseY >640 && mouseY <660 && mouseX < 1100 && mouseX >1000) { // related to show Simpsons
-  precision/=2;
+    precision/=2;
   }
-    if (mouseY >690 && mouseY <700 && mouseX < 1100 && mouseX >1000) { // related to show Simpsons
-  precision*=2;
+  if (mouseY >690 && mouseY <700 && mouseX < 1100 && mouseX >1000) { // related to show Simpsons
+    precision*=2;
   }
 }
 
@@ -190,12 +208,12 @@ void sidebar() {
 
   fill(0);
   rotate(-3*PI/2); // rotates the field to have left to right text.
-  text("Precision: "+precision, 1020, -950);
-  text("Delta x: "+13/precision, 1020, -940);
+  text("Precision~ Delta x: "+precision, 1020, -950);
+  text("# dots: "+13/precision, 1020, -940);
   text("True integral: 35.67754", 1020, -900);
-  text("Left Integral: "+leftIntegral(), 1020, -850);
-  text("Average Integral: "+averageIntegral(), 1020, -800);
-  text("Trapezoidal Integral: "+trapezoidalIntegral(), 1020, -750);
+  text("Left Integral: "+leftIntegral() + "\n %"+ (leftIntegral()- 35.67754)/ 35.6775400000, 1020, -850);
+  text("Average Integral: "+averageIntegral()+ "\n %"+ (averageIntegral()- 35.67754)/ 35.677540000, 1020, -800);
+  text("Trapezoidal Integral: "+trapezoidalIntegral()+ "\n %"+ (trapezoidalIntegral()- 35.67754000)/ 35.67754, 1020, -750);
   text("Simpsons integral: N/A", 1020, -700);
 
   text("Show Left", 1020, -600);
