@@ -1,7 +1,7 @@
 float precision = 4.0;
 
 void setup() {
-  size(1000, 1000);
+  size(1200, 1000);
   // scale is 1:50
 }
 
@@ -12,11 +12,9 @@ void draw() {
   background(200);
   cartesian();
   grid();
-  //pointA(2, 4);
-  pointA(5, glassFunction(5), #ff0000);
+  sidebar();
   renderFunction();
-
-  println(trapezoidalIntegral());
+  println(35.67754-averageIntegral());
 }
 
 void cartesian() {
@@ -71,6 +69,7 @@ void pointA(float x, float y, color c) {
 // the function section.
 void renderFunction() {
   strokeWeight(1);
+  stroke(0);
   for (float i = 0; i<20; i+=precision) {
     if (0<i && i<1.97046) {
       pointA(i, 1/(i+0.5));
@@ -163,4 +162,31 @@ void keyPressed() {
   if (key=='4') {
     precision/=5;
   }
+}
+
+
+
+// sidebar part
+
+void sidebar(){
+
+fill(240);
+noStroke();
+//rect(0,1000,1000,200);
+
+fill(0);
+rotate(-3*PI/2);
+text("Precision: "+precision, 1020,-950);
+text("Delta x: "+13/precision, 1020,-940);
+text("True integral: 35.67754", 1020,-900);
+text("Left Integral: "+leftIntegral(), 1020,-850);
+text("Average Integral: "+averageIntegral(), 1020,-800);
+text("Trapezoidal Integral: "+trapezoidalIntegral(), 1020,-750);
+text("Simpsons integral: N/A", 1020,-700);
+
+text("Show Left", 1020,-600);
+text("Show Average", 1020,-550);
+text("Show Trapezoidal", 1020,-500);
+text("Show Simpsons", 1020,-450);
+rotate(3*PI/2);
 }
