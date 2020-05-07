@@ -1,4 +1,8 @@
 float precision = 4.0;
+boolean showLeft = false;
+boolean showAverage = false;
+boolean showTrapetz = false;
+boolean showSimpsons = false;
 
 void setup() {
   size(1200, 1000);
@@ -8,13 +12,12 @@ void setup() {
 void draw() {
   translate(0, height);
   rotate(3*PI/2); // this makes cordinates to (y;x) instead.
-  // println((mouseY-500) +" ; "+(mouseX-500));
+  // println((mouseY) +" ; "+(mouseX));
   background(200);
   cartesian();
   grid();
   sidebar();
   renderFunction();
-  println(35.67754-averageIntegral());
 }
 
 void cartesian() {
@@ -164,29 +167,49 @@ void keyPressed() {
   }
 }
 
+void mousePressed() {
+  if (mouseY >390 && mouseY <400 && mouseX < 1100 && mouseX >1000) { // related to show left
+    showLeft = true;
+    showAverage = false;
+    showTrapetz = false;
+    showSimpsons = false;
+  }
+
+  if (mouseY >340 && mouseY <350 && mouseX < 1100 && mouseX >1000) { // related to show Average
+    showLeft = false;
+    showAverage = true;
+    showTrapetz = false;
+    showSimpsons = false;
+  }
+  if (mouseY >340 && mouseY <350 && mouseX < 1100 && mouseX >1000) { // related to show Average
+    showLeft = false;
+    showAverage = true;
+    showTrapetz = false;
+    showSimpsons = false;
+  }
+}
 
 
 // sidebar part
 
-void sidebar(){
+void sidebar() {
 
-fill(240);
-noStroke();
-//rect(0,1000,1000,200);
+  fill(0);
+  rotate(-3*PI/2); // rotates the field to have left to right text.
+  text("Precision: "+precision, 1020, -950);
+  text("Delta x: "+13/precision, 1020, -940);
+  text("True integral: 35.67754", 1020, -900);
+  text("Left Integral: "+leftIntegral(), 1020, -850);
+  text("Average Integral: "+averageIntegral(), 1020, -800);
+  text("Trapezoidal Integral: "+trapezoidalIntegral(), 1020, -750);
+  text("Simpsons integral: N/A", 1020, -700);
 
-fill(0);
-rotate(-3*PI/2);
-text("Precision: "+precision, 1020,-950);
-text("Delta x: "+13/precision, 1020,-940);
-text("True integral: 35.67754", 1020,-900);
-text("Left Integral: "+leftIntegral(), 1020,-850);
-text("Average Integral: "+averageIntegral(), 1020,-800);
-text("Trapezoidal Integral: "+trapezoidalIntegral(), 1020,-750);
-text("Simpsons integral: N/A", 1020,-700);
+  text("Show Left", 1020, -600);
+  text("Show Average", 1020, -550); 
+  text("Show Trapezoidal", 1020, -500);
+  text("Show Simpsons", 1020, -450);
 
-text("Show Left", 1020,-600);
-text("Show Average", 1020,-550);
-text("Show Trapezoidal", 1020,-500);
-text("Show Simpsons", 1020,-450);
-rotate(3*PI/2);
+  text("Increase Precision", 1020, -350);
+  text("Decrease Precision", 1020, -300);
+  rotate(3*PI/2);
 }
