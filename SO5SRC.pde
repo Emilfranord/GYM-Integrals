@@ -30,22 +30,11 @@ void draw() {
     renderTrapezoidalIntegral();
   }
 
-  
-  
-  int t = millis();
-  trapezoidalIntegral();
-  println(millis()-t);
-  
-  //if((millis()-t)<highestRecortedTime){
+  // time messuring system
+  //int t = millis();
+  //leftIntegral();
   //println(millis()-t);
-  //highestRecortedTime = millis()-t;
-  //}
-  
 }
-
-
-
-
 
 
 void cartesian() {
