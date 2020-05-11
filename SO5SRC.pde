@@ -38,7 +38,6 @@ void draw() {
   //println(millis()-t);
 }
 
-
 void cartesian() {
   stroke(0);
   strokeWeight(4);
@@ -98,24 +97,24 @@ void renderFunction() {
 }
 
 float glassFunction(float j) { // returns the value of the function given some number.
-  return tests(j);
+  //return tests(j);
 
   // max val = 13
   // expedted number =  35.67754
  
-  //if (0<j && j<1.97046) {
-  //  return  1/(j+0.5);
-  //}
-  //if (j>1.97046 && j<6.91583) {
-  //  return (exp(j)/1500)+0.4;
-  //}
-  //if (j>6.91583 && j<11.9898) {
-  //  return -j*j+19*j-82.5;
-  //}
-  //if (j>11.9898 && j<13) {
-  //  return tan(j+1)+1.1;
-  //}
-  //return 0;
+  if (0<j && j<1.97046) {
+    return  1/(j+0.5);
+  }
+  if (j>1.97046 && j<6.91583) {
+    return (exp(j)/1500)+0.4;
+  }
+  if (j>6.91583 && j<11.9898) {
+    return -j*j+19*j-82.5;
+  }
+  if (j>11.9898 && j<13) {
+    return tan(j+1)+1.1;
+  }
+  return 0;
 }
 
 // The integral section.
@@ -204,7 +203,7 @@ void sidebar() {
 
   fill(0);
   rotate(-3*PI/2); // rotates the field to have left to right text.
-  text("Precision~ Delta x: "+precision, 1020, -950);
+  text("Delta x: "+precision, 1020, -950);
   text("# dots: "+MAX_FUNCTION_VALUE/precision, 1020, -940);
   text("True: " +EXPECTED_INTEGRAL, 1020, -900);
   text("Left: "+leftIntegral() + "\n %"+ (leftIntegral()- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -850);
