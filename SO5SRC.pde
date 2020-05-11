@@ -1,4 +1,4 @@
-float precision = 4.0;
+float precision = 4.0; // functionaly the same as \Delta x. 
 final float MAX_FUNCTION_VALUE = 13.0;
 final float EXPECTED_INTEGRAL =35.6775400000; 
 boolean showLeft = false;
@@ -98,19 +98,24 @@ void renderFunction() {
 }
 
 float glassFunction(float j) { // returns the value of the function given some number.
-  if (0<j && j<1.97046) {
-    return  1/(j+0.5);
-  }
-  if (j>1.97046 && j<6.91583) {
-    return (exp(j)/1500)+0.4;
-  }
-  if (j>6.91583 && j<11.9898) {
-    return -j*j+19*j-82.5;
-  }
-  if (j>11.9898 && j<13) {
-    return tan(j+1)+1.1;
-  }
-  return -1;
+  return tests(j);
+
+  // max val = 13
+  // expedted number =  35.67754
+ 
+  //if (0<j && j<1.97046) {
+  //  return  1/(j+0.5);
+  //}
+  //if (j>1.97046 && j<6.91583) {
+  //  return (exp(j)/1500)+0.4;
+  //}
+  //if (j>6.91583 && j<11.9898) {
+  //  return -j*j+19*j-82.5;
+  //}
+  //if (j>11.9898 && j<13) {
+  //  return tan(j+1)+1.1;
+  //}
+  //return 0;
 }
 
 // The integral section.
@@ -152,7 +157,7 @@ void renderTrapezoidalIntegral() {
 float trapezoidalIntegral() {
   float sum = 0;
   for (float i = 0; i<MAX_FUNCTION_VALUE/precision; i++) {
-    sum += precision * (glassFunction(i*precision+precision) + glassFunction(i*precision))/2;
+    sum += precision * (glassFunction((i*precision)+precision) + glassFunction(i*precision))/2;
   }
   return sum;
 }
@@ -201,10 +206,10 @@ void sidebar() {
   rotate(-3*PI/2); // rotates the field to have left to right text.
   text("Precision~ Delta x: "+precision, 1020, -950);
   text("# dots: "+MAX_FUNCTION_VALUE/precision, 1020, -940);
-  text("True integral: " +EXPECTED_INTEGRAL, 1020, -900);
-  text("Left Integral: "+leftIntegral() + "\n %"+ (leftIntegral()- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -850);
-  text("Average Integral: "+averageIntegral()+ "\n %"+ (averageIntegral()- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -800);
-  text("Trapezoidal Integral: "+trapezoidalIntegral()+ "\n %"+ (trapezoidalIntegral()- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -750);
+  text("True: " +EXPECTED_INTEGRAL, 1020, -900);
+  text("Left: "+leftIntegral() + "\n %"+ (leftIntegral()- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -850);
+  text("Average: "+averageIntegral()+ "\n %"+ (averageIntegral()- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -800);
+  text("Trapezoidal: "+trapezoidalIntegral()+ "\n %"+ (trapezoidalIntegral()- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -750);
   text("Simpsons integral: N/A", 1020, -700);
 
   text("Show Left", 1020, -600);
