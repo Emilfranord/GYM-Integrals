@@ -1,12 +1,15 @@
 float precision = 4.0; // functionaly the same as \Delta x. 
 final float MAX_FUNCTION_VALUE = 13.0;
-final float EXPECTED_INTEGRAL =35.6775400000;
+final float EXPECTED_INTEGRAL = 35.6775400000;
 long q = 0;
 boolean showLeft = false;
 boolean showAverage = false;
 boolean showTrapetz = false;
 boolean showSimpsons = false;
 int highestRecortedTime = 0;
+
+
+
 
 void setup() {
   size(1200, 1000);
@@ -38,7 +41,7 @@ void draw() {
   //int t = millis();
   //leftIntegral();
   //println(millis()-t);
-  
+
   // complexety test
   q = 0;
   //leftIntegral();
@@ -108,30 +111,40 @@ int digits (float number) {
   return (int) log10(number) + 1;
 }
 
-float glassFunction(float j) { // returns the value of the function given some number.
-  //return tests(j);
+float glassFunction(float x) { // returns the value of the function given some number.
+  //return tests(x);
 
   // max val = 13
   // expedted number =  35.67754
 
-  if (0<j && j<1.97046) {
-    q += max(digits(j), digits(0.5)) + (max(digits(j), digits(0.5)))*(max(digits(j), digits(0.5)));
-      return  1/(j+0.5);
-  }
-  if (j>1.97046 && j<6.91583) {
-    q += max(digits(exp(j)), digits(1500))*max(digits(exp(j)), digits(1500)) + digits(max((exp(j)/1500),0.4)) ;
-    return (exp(j)/1500)+0.4;
-  }
-  if (j>6.91583 && j<11.9898) {
-    q+= digits(j)* digits(j) + digits(max(19,j))*digits(max(19,j)) + digits(max(j*j, 19*j, 82.5));
-    return -j*j+19*j-82.5;
-  }
-  if (j>11.9898 && j<13) {
-    q+= 2+digits(max(tan(j+1),1.1));
-    return tan(j+1)+1.1;
+  for (int i = 0; i<functions.length; i++ ) {
+    if (x>breaks[i] && x<breaks[i+1]) {
+      return functions[i].call(x);
+    }
   }
   return 0;
 }
+
+//Functor inverse = new Inverse(0.5, 1);
+//Functor exponential = new Exponential(1500, 0.4);
+//Functor secondDegreePolynomial = new SecondDegreePolynomial(-1, 19, -82.5);
+//Functor tangens = new Tangens(1, 1.1);
+// make a glass function and run (.call) it over all x.
+
+Functor[] functions = {new Inverse(0.5, 1), new Exponential(1500, 0.4), new SecondDegreePolynomial(-1, 19, -82.5), new Tangens(1, 1.1)};
+float[] breaks = {0, 1.97046, 6.91583, 11.9898, 13};
+
+
+//float secondDegreePolynomial(float x, float curvature, float b, float yOffset) {
+//  return curvature*x*x + b*x + yOffset;
+//}
+
+//float tangens(float x, float xOffset, float yOffset) {
+//  return tan(x+xOffset)+yOffset;
+//}
+
+
+// potens function.
 
 // The integral section.
 
@@ -141,13 +154,24 @@ void renderLeftIntegral() {
   }
 }
 
-float leftIntegral() {
+//float leftIntegral() {
+//  float sum = 0;
+//  for (int i = 0; i<MAX_FUNCTION_VALUE/precision; i++) {
+//    sum += glassFunction(i*precision)*precision;
+//  }
+//  return sum;
+//}
+
+float leftIntegral(float lowerBound, float upperBound ) {
   float sum = 0;
-  for (float i = 0; i<MAX_FUNCTION_VALUE/precision; i++) {
-    q+= digits(max(MAX_FUNCTION_VALUE, precision))*digits(max(MAX_FUNCTION_VALUE, precision)) + digits(max(i, precision))*digits(max(i, precision)) + digits(glassFunction(i*precision))*digits(glassFunction(i*precision));
-    sum += glassFunction(i*precision)*precision;
+  for (float x = lowerBound; x<upperBound; x+=precision) {
+    sum += glassFunction(x)*precision;
   }
   return sum;
+}
+
+float leftIntegral() {
+  return leftIntegral(0, MAX_FUNCTION_VALUE);
 }
 
 void renderAverageIntegral() {
@@ -208,10 +232,10 @@ void mousePressed() {
     showSimpsons = true;
   }
 
-  if (mouseY >640 && mouseY <660 && mouseX < 1100 && mouseX >1000) { // related to show Simpsons
+  if (mouseY >640 && mouseY <660 && mouseX < 1100 && mouseX >1000) { // related to increase pre.
     precision/=2;
   }
-  if (mouseY >690 && mouseY <700 && mouseX < 1100 && mouseX >1000) { // related to show Simpsons
+  if (mouseY >690 && mouseY <700 && mouseX < 1100 && mouseX >1000) { // related to decrease pre 
     precision*=2;
   }
 }
