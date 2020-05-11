@@ -1,6 +1,7 @@
 float precision = 4.0; // functionaly the same as \Delta x. 
 final float MAX_FUNCTION_VALUE = 13.0;
-final float EXPECTED_INTEGRAL =35.6775400000; 
+final float EXPECTED_INTEGRAL =35.6775400000;
+long q = 0;
 boolean showLeft = false;
 boolean showAverage = false;
 boolean showTrapetz = false;
@@ -13,6 +14,7 @@ void setup() {
 }
 
 void draw() {
+
   translate(0, height);
   rotate(3*PI/2); // this makes cordinates to (y;x) instead.
   //println((mouseY) +" ; "+(mouseX));
@@ -36,6 +38,13 @@ void draw() {
   //int t = millis();
   //leftIntegral();
   //println(millis()-t);
+  
+  // complexety test
+  q = 0;
+  //leftIntegral();
+  //averageIntegral();
+  trapezoidalIntegral();
+  println(q);
 }
 
 void cartesian() {
@@ -92,22 +101,33 @@ void renderFunction() {
   }
 }
 
+float log10 (float x) {
+  return (log(x) / log(10));
+}
+int digits (float number) { 
+  return (int) log10(number) + 1;
+}
+
 float glassFunction(float j) { // returns the value of the function given some number.
   //return tests(j);
 
   // max val = 13
   // expedted number =  35.67754
- 
+
   if (0<j && j<1.97046) {
-    return  1/(j+0.5);
+    q += max(digits(j), digits(0.5)) + (max(digits(j), digits(0.5)))*(max(digits(j), digits(0.5)));
+      return  1/(j+0.5);
   }
   if (j>1.97046 && j<6.91583) {
+    q += max(digits(exp(j)), digits(1500))*max(digits(exp(j)), digits(1500)) + digits(max((exp(j)/1500),0.4)) ;
     return (exp(j)/1500)+0.4;
   }
   if (j>6.91583 && j<11.9898) {
+    q+= digits(j)* digits(j) + digits(max(19,j))*digits(max(19,j)) + digits(max(j*j, 19*j, 82.5));
     return -j*j+19*j-82.5;
   }
   if (j>11.9898 && j<13) {
+    q+= 2+digits(max(tan(j+1),1.1));
     return tan(j+1)+1.1;
   }
   return 0;
@@ -124,6 +144,7 @@ void renderLeftIntegral() {
 float leftIntegral() {
   float sum = 0;
   for (float i = 0; i<MAX_FUNCTION_VALUE/precision; i++) {
+    q+= digits(max(MAX_FUNCTION_VALUE, precision))*digits(max(MAX_FUNCTION_VALUE, precision)) + digits(max(i, precision))*digits(max(i, precision)) + digits(glassFunction(i*precision))*digits(glassFunction(i*precision));
     sum += glassFunction(i*precision)*precision;
   }
   return sum;
@@ -138,6 +159,7 @@ void renderAverageIntegral() {
 float averageIntegral() {
   float sum = 0;
   for (float i = 0; i< MAX_FUNCTION_VALUE/precision; i++) {
+    q+= digits(max(MAX_FUNCTION_VALUE, precision))*digits(max(MAX_FUNCTION_VALUE, precision)) + digits(max(i, precision))*digits(max(i, precision)) + digits(max(precision*i, precision/2)) + digits(precision)*digits(precision) + digits(glassFunction(precision*i + precision/2))*digits(glassFunction(precision*i + precision/2)) ;
     sum += glassFunction(precision*i + precision/2)*precision;
   }
   return sum;
@@ -152,6 +174,7 @@ void renderTrapezoidalIntegral() {
 float trapezoidalIntegral() {
   float sum = 0;
   for (float i = 0; i<MAX_FUNCTION_VALUE/precision; i++) {
+    //q+= solve for complexety in future. 
     sum += precision * (glassFunction((i*precision)+precision) + glassFunction(i*precision))/2;
   }
   return sum;
