@@ -107,7 +107,7 @@ float glassFunction(float j) { // returns the value of the function given some n
   if (j>6.91583 && j<11.9898) {
     return -j*j+19*j-82.5;
   }
-  if (j>11.9898 && j<13) {s
+  if (j>11.9898 && j<13) {
     return tan(j+1)+1.1;
   }
   return 0;
