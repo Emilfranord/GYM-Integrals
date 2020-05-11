@@ -1,4 +1,6 @@
 float precision = 4.0;
+final float MAX_FUNCTION_VALUE = 13.0;
+final float EXPECTED_INTEGRAL =35.6775400000; 
 boolean showLeft = false;
 boolean showAverage = false;
 boolean showTrapetz = false;
@@ -121,7 +123,7 @@ void renderLeftIntegral() {
 
 float leftIntegral() {
   float sum = 0;
-  for (float i = 0; i<13/precision; i++) {
+  for (float i = 0; i<MAX_FUNCTION_VALUE/precision; i++) {
     sum += glassFunction(i*precision)*precision;
   }
   return sum;
@@ -135,7 +137,7 @@ void renderAverageIntegral() {
 
 float averageIntegral() {
   float sum = 0;
-  for (float i = 0; i< 13/precision; i++) {
+  for (float i = 0; i< MAX_FUNCTION_VALUE/precision; i++) {
     sum += glassFunction(precision*i + precision/2)*precision;
   }
   return sum;
@@ -149,7 +151,7 @@ void renderTrapezoidalIntegral() {
 
 float trapezoidalIntegral() {
   float sum = 0;
-  for (float i = 0; i<13/precision; i++) {
+  for (float i = 0; i<MAX_FUNCTION_VALUE/precision; i++) {
     sum += precision * (glassFunction(i*precision+precision) + glassFunction(i*precision))/2;
   }
   return sum;
@@ -198,11 +200,11 @@ void sidebar() {
   fill(0);
   rotate(-3*PI/2); // rotates the field to have left to right text.
   text("Precision~ Delta x: "+precision, 1020, -950);
-  text("# dots: "+13/precision, 1020, -940);
-  text("True integral: 35.67754", 1020, -900);
-  text("Left Integral: "+leftIntegral() + "\n %"+ (leftIntegral()- 35.67754)/ 35.6775400000, 1020, -850);
-  text("Average Integral: "+averageIntegral()+ "\n %"+ (averageIntegral()- 35.67754)/ 35.677540000, 1020, -800);
-  text("Trapezoidal Integral: "+trapezoidalIntegral()+ "\n %"+ (trapezoidalIntegral()- 35.67754000)/ 35.67754, 1020, -750);
+  text("# dots: "+MAX_FUNCTION_VALUE/precision, 1020, -940);
+  text("True integral: " +EXPECTED_INTEGRAL, 1020, -900);
+  text("Left Integral: "+leftIntegral() + "\n %"+ (leftIntegral()- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -850);
+  text("Average Integral: "+averageIntegral()+ "\n %"+ (averageIntegral()- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -800);
+  text("Trapezoidal Integral: "+trapezoidalIntegral()+ "\n %"+ (trapezoidalIntegral()- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -750);
   text("Simpsons integral: N/A", 1020, -700);
 
   text("Show Left", 1020, -600);
