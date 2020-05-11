@@ -32,7 +32,7 @@ void draw() {
     renderTrapezoidalIntegral();
   }
 
-  // time messuring system
+  //time measuring system
   //int t = millis();
   //leftIntegral();
   //println(millis()-t);
@@ -82,10 +82,6 @@ void pointA(float x, float y, color c) {
   point(y*50, x*50);
   stroke(100);
 }
-
-// Output to a txt file.
-// Make a config file?
-// Numerical integration.
 
 // the function section.
 void renderFunction() {
