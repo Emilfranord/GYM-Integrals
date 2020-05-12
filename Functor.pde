@@ -1,6 +1,8 @@
 interface Functor {
 
   float call(float x); // makes all the other classes have a call function, and makes the classes the same datatype.
+
+  void startAt(float x, float y);
 }
 
 class Inverse implements Functor {
@@ -20,6 +22,11 @@ class Inverse implements Functor {
   float call(float x) {
     return 1/pow(x+this.xOffset, this.power);
   }
+
+  void startAt(float x, float y) {
+    //this.xOffset = xOffset-x;
+    this.power = log(y) / log(1/(x+this.xOffset));
+  }
 }
 
 class Exponential implements Functor {
@@ -38,6 +45,10 @@ class Exponential implements Functor {
 
   float call(float x) {
     return exp(x)/this.scale+this.yOffset;
+  }
+  void startAt(float x, float y) {
+    this.yOffset += y-this.call(x);
+    
   }
 }
 
@@ -62,6 +73,10 @@ class SecondDegreePolynomial implements Functor {
   float call(float x) {
     return this.curvature*x*x + this.b*x + this.yOffset;
   }
+
+  void startAt(float x, float y) {
+    this.yOffset += y-this.call(x);
+  }
 }
 
 float tangens(float x, float xOffset, float yOffset) {
@@ -84,6 +99,9 @@ class Tangens implements Functor {
 
   float call(float x) {
     return tan(x+this.xOffset)+this.yOffset;
+  }
+  void startAt(float x, float y) {
+    this.yOffset= y-this.call(x)+this.yOffset;
   }
 }
 
@@ -114,21 +132,38 @@ class GlassFunction implements Functor {
   float getBreak(int i) {
     return this.breaks[i];
   }
+  
+  void startAt(float x, float y) {
+    if(this.functions.length >0){
+      this.functions[0].startAt(x, y);
+      this.startAt();
+    }
+  }
+  
+  void startAt(){
+    for(int i = 0; i<functions.length; i++){
+      float x = this.breaks[i+1];
+      this.functions[i+1].startAt(x, this.functions[i].call(x));
+    }
+  }
 }
 
 class Polynomial implements Functor {
   float[] coefficients;
-  
-  Polynomial(float[] coefficients){ // x^0 is index 0, x^1 is index 1.... 
+
+  Polynomial(float[] coefficients) { // x^0 is index 0, x^1 is index 1.... 
     this.coefficients = coefficients;
   }
-  
+
   float call(float x) {
     float sum =0;
-    for(int i =0; i<this.coefficients.length; i++){
-      sum += this.coefficients[i]* pow(x,i);
+    for (int i =0; i<this.coefficients.length; i++) {
+      sum += this.coefficients[i]* pow(x, i);
     }
     return sum;
+  }
+  void startAt(float x, float y) {
+    this.coefficients[0] += y-this.call(x);
   }
 }
 
