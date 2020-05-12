@@ -140,8 +140,6 @@ Functor glass = new GlassFunction(); //functions, breaks
 //  return tan(x+xOffset)+yOffset;
 //}
 
-
-
 // The integral section.
 
 void renderLeftIntegral() {
