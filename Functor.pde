@@ -103,6 +103,7 @@ class GlassFunction implements Functor {
   GlassFunction() {
     this.functions = new Functor[] {new Inverse(0.5, 1), new Exponential(1500, 0.4), new SecondDegreePolynomial(-1, 19, -82.5), new Tangens(1, 1.1)};
     this.breaks = new float[] {0, 1.97046, 6.91583, 11.9898, 13};
+    // they do not wirk, there is a conflict in calling them. 
   }
 
   float call(float x) {
@@ -113,6 +114,11 @@ class GlassFunction implements Functor {
     }
     return 0;
   }
+  
+  float getBreak(int i){
+    return this.breaks[i];
+  }
+  
 }
 
 
