@@ -1,6 +1,6 @@
 float precision = 4.0; // the same as \Delta x.
 final float EXPECTED_INTEGRAL = 35.6775400000;
-boolean showLeft, showAverage, showTrapetz , showSimpsons;
+boolean showLeft, showAverage, showTrapetz, showSimpsons;
 
 void setup() {
   size(1200, 1000);
@@ -9,12 +9,12 @@ void setup() {
 
 void draw() {
   translate(0, height);
-  rotate(3*PI/2); // this makes cordinates to (y;x) instead.
+  rotate(3*PI/2); // this makes cordinates (y;x) instead.
   background(200);
   cartesian(); // cordinate system
   grid(); // gray grid
-  sidebar(); // info on
-  renderFunction();
+  sidebar(); // info the the side
+  renderFunction(); // draws the dots in the function. 
 
   // renders integrals based on the choosen one.
   fill(50, 25);
@@ -27,8 +27,6 @@ void draw() {
   if (showTrapetz) {
     renderTrapezoidalIntegral();
   }
-
-
 }
 
 void cartesian() {
@@ -65,7 +63,7 @@ void grid() { // draws certical and horisontal lines every 50 pixels.
 }
 
 void pointA(float x, float y) { // this reverses the problem caused by rotate.
-pointA(x, y, #000000);
+  pointA(x, y, #000000);
 }
 
 void pointA(float x, float y, color c) { 
@@ -84,7 +82,7 @@ void renderFunction() {
   }
 }
 
-float time(int cycles ){
+float time(int cycles) {
   //time measuring system
   int t = millis();
   for (int c = 0; c<cycles; c++) {
@@ -93,7 +91,6 @@ float time(int cycles ){
     //trapezoidalIntegral();
   }
   return (millis()-t)/cycles; // returns the time it takes to do one function.
-
 }
 
 float glassFunction(float x) { // returns the value of the function given some number.
@@ -110,13 +107,15 @@ float glassFunction(float x) { // returns the value of the function given some n
 //float[] breaks = {0, 1.97046, 6.91583, 11.9898, 13};
 
 
-Functor[] functions = {new Exponential(1500,5), new StraightLine(2.5, -5)}; 
-  // lists the order the functions will be in and their arguments/ parameters 
-float[] breaks = {4, 6, 10}; 
-  // lists for what values of x the functions will be defined. the upper bound and lower bound is shared between two adjesent functions. 
+//Functor[] functions = {}; 
+Functor[] functions = {new Inverse(0.5, 1), new Exponential(1500, 0.4), new SecondDegreePolynomial(-1, 19, -82.5), new Tangens(1, 1.1)};
+// lists the order the functions will be in and their arguments/ parameters 
+float[] breaks = {0, 1.97046, 6.91583, 11.9898, 13};
+// lists for what values of x the functions will be defined. the upper bound and lower bound is shared between two adjesent functions. 
 
-Functor glass = new GlassFunction(functions,breaks); //functions, breaks, using specific arrays
+//Functor glass = new GlassFunction(functions, breaks); //functions, breaks, using specific arrays
 //Functor glass = new GlassFunction(); //functions, breaks, using default cases 
+
 
 
 // The integral section.
@@ -135,7 +134,7 @@ float leftIntegral(float lowerBound, float upperBound ) {
 }
 
 float leftIntegral() {
-  return leftIntegral(0, 20); // default case if there are no arguments. 
+  return leftIntegral(0, 20); // default case if there are no arguments.
 }
 
 void renderAverageIntegral() {
@@ -215,15 +214,15 @@ void sidebar() {  // shows all relavent data, and % error from the expected valu
   text("Delta x: "+precision, 1020, -950);
   text("# dots: "+(abs(breaks[0]-breaks[breaks.length-1]))/precision, 1020, -940);
   text("True: " +EXPECTED_INTEGRAL, 1020, -900);
-  
+
   text("Left: "+leftIntegral(breaks[0], breaks[breaks.length-1]) + 
-  "\n %"+ (leftIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -850);
-  
+    "\n %"+ (leftIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -850);
+
   text("Average: "+averageIntegral(breaks[0], breaks[breaks.length-1])+ 
-  "\n %"+ (averageIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -800);
- 
+    "\n %"+ (averageIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -800);
+
   text("Trapezoidal: "+trapezoidalIntegral(breaks[0], breaks[breaks.length-1])+ 
-  "\n %"+ (trapezoidalIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -750);
+    "\n %"+ (trapezoidalIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -750);
   //text("Simpsons integral: N/A", 1020, -700);
 
   text("Show Left", 1020, -600);
