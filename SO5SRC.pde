@@ -1,16 +1,13 @@
 float precision = 4.0; // the same as \Delta x.
 final float EXPECTED_INTEGRAL = 35.6775400000;
 boolean showLeft, showAverage, showTrapetz , showSimpsons;
-String[] settings;
 
 void setup() {
   size(1200, 1000);
   // scale is 1:50
-  settings = loadStrings("settings.txt");
 }
 
 void draw() {
-
   translate(0, height);
   rotate(3*PI/2); // this makes cordinates to (y;x) instead.
   background(200);
