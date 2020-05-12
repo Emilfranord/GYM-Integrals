@@ -1,4 +1,4 @@
-float precision =4.0; // the same as \Delta x.
+float precision = 4.0; // the same as \Delta x.
 final float EXPECTED_INTEGRAL = 35.6775400000;
 boolean showLeft, showAverage, showTrapetz , showSimpsons;
 String[] settings;
@@ -10,6 +10,7 @@ void setup() {
 }
 
 void draw() {
+
   translate(0, height);
   rotate(3*PI/2); // this makes cordinates to (y;x) instead.
   background(200);
@@ -18,6 +19,8 @@ void draw() {
   sidebar(); // info on
   renderFunction();
 
+  // renders integrals based on the choosen one.
+  fill(50, 25);
   if (showLeft) {
     renderLeftIntegral();
   }
@@ -28,14 +31,7 @@ void draw() {
     renderTrapezoidalIntegral();
   }
 
-  //time measuring system
-  //int t = millis();
-  //for (int c = 0; c<100; c++) {
-  //  //leftIntegral();
-  //  //averageIntegral();
-  //  //trapezoidalIntegral();
-  //}
-  //println(millis()-t);
+
 }
 
 void cartesian() {
@@ -72,11 +68,11 @@ void grid() { // draws certical and horisontal lines every 50 pixels.
 }
 
 void pointA(float x, float y) { // this reverses the problem caused by rotate.
-pointA(x, y, #ffffff);
+pointA(x, y, #000000);
 }
 
 void pointA(float x, float y, color c) { 
-  strokeWeight(6);
+  strokeWeight(2);
   stroke(c);
   point(y*50, x*50);
   stroke(100);
@@ -89,6 +85,18 @@ void renderFunction() {
   for (float x = 0; x<20; x+=precision) {
     pointA(x, glassFunction(x));
   }
+}
+
+float time(int cycles ){
+  //time measuring system
+  int t = millis();
+  for (int c = 0; c<cycles; c++) {
+    //leftIntegral();
+    //averageIntegral();
+    //trapezoidalIntegral();
+  }
+  return (millis()-t)/cycles; // returns the time it takes to do one function.
+
 }
 
 float glassFunction(float x) { // returns the value of the function given some number.
@@ -105,9 +113,9 @@ float glassFunction(float x) { // returns the value of the function given some n
 //float[] breaks = {0, 1.97046, 6.91583, 11.9898, 13};
 
 
-Functor[] functions = {new Exponential()}; 
+Functor[] functions = {new Exponential(1500,5), new StraightLine(2.5, -5)}; 
   // lists the order the functions will be in and their arguments/ parameters 
-float[] breaks = {6, 16}; 
+float[] breaks = {4, 6, 10}; 
   // lists for what values of x the functions will be defined. the upper bound and lower bound is shared between two adjesent functions. 
 
 Functor glass = new GlassFunction(functions,breaks); //functions, breaks, using specific arrays
@@ -172,7 +180,6 @@ float trapezoidalIntegral() {
 }
 
 // sidebar controll 
-
 void mousePressed() {
   if (mouseY >390 && mouseY <400 && mouseX < 1100 && mouseX >1000) { // related to show left
     showLeft = true;
