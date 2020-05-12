@@ -1,18 +1,21 @@
 float precision =4.0; // the same as \Delta x.
-
 final float MAX_FUNCTION_VALUE = 13.0;
 final float EXPECTED_INTEGRAL = 35.6775400000;
 boolean showLeft = false;
 boolean showAverage = false;
 boolean showTrapetz = false;
 boolean showSimpsons = false;
-int highestRecortedTime = 0;
+
+String[] settings;
+InputStream inputStream;
 
 
 void setup() {
   size(1200, 1000);
   // scale is 1:50
+  settings = loadStrings("settings.txt");
 }
+
 
 void draw() {
 
