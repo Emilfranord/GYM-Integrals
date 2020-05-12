@@ -5,6 +5,7 @@ boolean showLeft, showAverage, showTrapetz, showSimpsons;
 void setup() {
   size(1200, 1000);
   // scale is 1:50
+  callingPlace();
 }
 
 void draw() {
@@ -13,7 +14,7 @@ void draw() {
   background(200);
   cartesian(); // cordinate system
   grid(); // gray grid
-  sidebar(); // info the the side
+  //sidebar(); // info the the side
   renderFunction(); // draws the dots in the function. 
 
   // renders integrals based on the choosen one.
@@ -106,6 +107,7 @@ float glassFunction(float x) { // returns the value of the function given some n
 //Functor[] functions = {new Inverse(0.5, 1), new Exponential(1500, 0.4), new SecondDegreePolynomial(-1, 19, -82.5), new Tangens(1, 1.1)};
 //float[] breaks = {0, 1.97046, 6.91583, 11.9898, 13};
 
+//float[] third = {-82.5, 19.0, -1.0};
 
 //Functor[] functions = {}; 
 Functor[] functions = {new Inverse(0.5, 1), new Exponential(1500, 0.4), new SecondDegreePolynomial(-1, 19, -82.5), new Tangens(1, 1.1)};
@@ -113,10 +115,8 @@ Functor[] functions = {new Inverse(0.5, 1), new Exponential(1500, 0.4), new Seco
 float[] breaks = {0, 1.97046, 6.91583, 11.9898, 13};
 // lists for what values of x the functions will be defined. the upper bound and lower bound is shared between two adjesent functions. 
 
-//Functor glass = new GlassFunction(functions, breaks); //functions, breaks, using specific arrays
+Functor glass = new GlassFunction(functions, breaks); //functions, breaks, using specific arrays
 //Functor glass = new GlassFunction(); //functions, breaks, using default cases 
-
-
 
 // The integral section.
 void renderLeftIntegral() {
@@ -125,17 +125,39 @@ void renderLeftIntegral() {
   }
 }
 
-float leftIntegral(float lowerBound, float upperBound ) {
-  float sum = 0;
-  for (float x = lowerBound; x<upperBound; x+=precision) {
-    sum += glassFunction(x)*precision;
-  }
-  return sum;
+//float leftIntegral(float lowerBound, float upperBound ) {
+//  float sum = 0;
+//  for (float x = lowerBound; x<upperBound; x+=precision) {
+//    sum += glassFunction(x)*precision;
+//  }
+//  return sum;
+//}
+
+Integral integ = new LeftIntegral();
+Functor second = new Inverse(0.5, 1);
+
+void callingPlace(){
+
+println(integ.call(second,0.1,5,10));
+
 }
 
-float leftIntegral() {
-  return leftIntegral(0, 20); // default case if there are no arguments.
-}
+
+//float functorLeftIntegral(Functor func, float precision, float lowerBound, float upperBound) {
+//  float sum = 0;
+//  for (float x = lowerBound; x<upperBound; x+=precision) {
+//    sum += func.call(x)*precision;
+//  }
+//  return sum;
+//}
+
+//float functorLeftIntegral(GlassFunction glass, float precision) {
+//  return functorLeftIntegral(glass, precision, glass.breaks[0], glass.breaks[breaks.length-1]);
+//}
+
+//float leftIntegral() {
+//  return leftIntegral(0, 20); // default case if there are no arguments.
+//}
 
 void renderAverageIntegral() {
   for (float i = 0; i<20; i+=precision) {
@@ -143,18 +165,18 @@ void renderAverageIntegral() {
   }
 }
 
-float averageIntegral(float lowerBound, float upperBound) {
-  float sum = 0;
-  for (float x = lowerBound; x< upperBound; x+=precision) {
+//float averageIntegral(float lowerBound, float upperBound) {
+//  float sum = 0;
+//  for (float x = lowerBound; x< upperBound; x+=precision) {
 
-    sum += glassFunction(x + precision/2)*precision;
-  }
-  return sum;
-}
+//    sum += glassFunction(x + precision/2)*precision;
+//  }
+//  return sum;
+//}
 
-float averageIntegral() {
-  return averageIntegral(0, 20);
-}
+//float averageIntegral() {
+//  return averageIntegral(0, 20);
+//}
 
 void renderTrapezoidalIntegral() {
   for (float i = 0; i<20; i+=precision) {
@@ -162,18 +184,18 @@ void renderTrapezoidalIntegral() {
   }
 }
 
-float trapezoidalIntegral(float lowerBound, float upperBound) {
-  float sum = 0;
-  for (float x = lowerBound; x< upperBound; x+=precision) {
+//float trapezoidalIntegral(float lowerBound, float upperBound) {
+//  float sum = 0;
+//  for (float x = lowerBound; x< upperBound; x+=precision) {
 
-    sum += precision * (glassFunction((x)+precision) + glassFunction(x))/2;
-  }
-  return sum;
-}
+//    sum += precision * (glassFunction((x)+precision) + glassFunction(x))/2;
+//  }
+//  return sum;
+//}
 
-float trapezoidalIntegral() {
-  return trapezoidalIntegral(0, 20);
-}
+//float trapezoidalIntegral() {
+//  return trapezoidalIntegral(0, 20);
+//}
 
 // sidebar controll 
 void mousePressed() {
@@ -207,30 +229,30 @@ void mousePressed() {
 
 // sidebar rendering
 
-void sidebar() {  // shows all relavent data, and % error from the expected value. 
+//void sidebar() {  // shows all relavent data, and % error from the expected value. 
 
-  fill(0);
-  rotate(-3*PI/2); // rotates the field to have left to right text.
-  text("Delta x: "+precision, 1020, -950);
-  text("# dots: "+(abs(breaks[0]-breaks[breaks.length-1]))/precision, 1020, -940);
-  text("True: " +EXPECTED_INTEGRAL, 1020, -900);
+//  fill(0);
+//  rotate(-3*PI/2); // rotates the field to have left to right text.
+//  text("Delta x: "+precision, 1020, -950);
+//  text("# dots: "+(abs(breaks[0]-breaks[breaks.length-1]))/precision, 1020, -940);
+//  text("True: " +EXPECTED_INTEGRAL, 1020, -900);
 
-  text("Left: "+leftIntegral(breaks[0], breaks[breaks.length-1]) + 
-    "\n %"+ (leftIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -850);
+//  text("Left: "+leftIntegral(breaks[0], breaks[breaks.length-1]) + 
+//    "\n %"+ (leftIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -850);
 
-  text("Average: "+averageIntegral(breaks[0], breaks[breaks.length-1])+ 
-    "\n %"+ (averageIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -800);
+//  text("Average: "+averageIntegral(breaks[0], breaks[breaks.length-1])+ 
+//    "\n %"+ (averageIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -800);
 
-  text("Trapezoidal: "+trapezoidalIntegral(breaks[0], breaks[breaks.length-1])+ 
-    "\n %"+ (trapezoidalIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -750);
-  //text("Simpsons integral: N/A", 1020, -700);
+//  text("Trapezoidal: "+trapezoidalIntegral(breaks[0], breaks[breaks.length-1])+ 
+//    "\n %"+ (trapezoidalIntegral(breaks[0], breaks[breaks.length-1])- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -750);
+//  //text("Simpsons integral: N/A", 1020, -700);
 
-  text("Show Left", 1020, -600);
-  text("Show Average", 1020, -550); 
-  text("Show Trapezoidal", 1020, -500);
-  text("Show Simpsons", 1020, -450);
+//  text("Show Left", 1020, -600);
+//  text("Show Average", 1020, -550); 
+//  text("Show Trapezoidal", 1020, -500);
+//  text("Show Simpsons", 1020, -450);
 
-  text("Increase Precision", 1020, -350);
-  text("Decrease Precision", 1020, -300);
-  rotate(3*PI/2);
-}
+//  text("Increase Precision", 1020, -350);
+//  text("Decrease Precision", 1020, -300);
+//  rotate(3*PI/2);
+//}
