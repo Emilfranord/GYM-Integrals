@@ -1,6 +1,6 @@
 interface Functor {
 
-  float call(float x);
+  float call(float x); // makes all the other classes have a call function, and makes the classes the same datatype.
 }
 
 class Inverse implements Functor {
@@ -63,7 +63,6 @@ class SecondDegreePolynomial implements Functor {
     this.yOffset = 0;
   }
 
-
   float call(float x) {
     return this.curvature*x*x + this.b*x + this.yOffset;
   }
@@ -113,5 +112,25 @@ class GlassFunction implements Functor {
       }
     }
     return 0;
+  }
+}
+
+
+class StraightLine implements Functor {
+  float slope;
+  float yOffset;
+
+  StraightLine(float slope, float yOffset) {
+    this.slope = slope;
+    this.yOffset = yOffset;
+  }
+  
+  StraightLine(){
+    this.slope = 1;
+    this.yOffset = 0;
+  }
+
+  float call(float x) {
+    return this.slope *x + this.yOffset;
   }
 }
