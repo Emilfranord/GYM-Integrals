@@ -1,14 +1,12 @@
-float precision = 4.0; // functionaly the same as \Delta x. 
+float precision =4.0; // functionaly the same as \Delta x. precision = 3.81 *pow(10, -6);
+
 final float MAX_FUNCTION_VALUE = 13.0;
 final float EXPECTED_INTEGRAL = 35.6775400000;
-long q = 0;
 boolean showLeft = false;
 boolean showAverage = false;
 boolean showTrapetz = false;
 boolean showSimpsons = false;
 int highestRecortedTime = 0;
-
-
 
 
 void setup() {
@@ -38,16 +36,11 @@ void draw() {
   }
 
   //time measuring system
-  //int t = millis();
-  //leftIntegral();
-  //println(millis()-t);
-
-  // complexety test
-  q = 0;
-  //leftIntegral();
-  //averageIntegral();
-  trapezoidalIntegral();
-  println(q);
+  int t = millis();
+  for (int c = 0; c<1000; c++) {
+    leftIntegral();
+  }
+  println(millis()-t);
 }
 
 void cartesian() {
@@ -114,15 +107,15 @@ int digits (float number) {
 float glassFunction(float x) { // returns the value of the function given some number.
   //return tests(x);
 
-  // max val = 13
+  return glass.call(x);
   // expedted number =  35.67754
 
-  for (int i = 0; i<functions.length; i++ ) {
-    if (x>breaks[i] && x<breaks[i+1]) {
-      return functions[i].call(x);
-    }
-  }
-  return 0;
+  //for (int i = 0; i<functions.length; i++ ) {
+  //  if (x>breaks[i] && x<breaks[i+1]) {
+  //    return functions[i].call(x);
+  //  }
+  //}
+  //return 0;
 }
 
 //Functor inverse = new Inverse(0.5, 1);
@@ -134,6 +127,8 @@ float glassFunction(float x) { // returns the value of the function given some n
 Functor[] functions = {new Inverse(0.5, 1), new Exponential(1500, 0.4), new SecondDegreePolynomial(-1, 19, -82.5), new Tangens(1, 1.1)};
 float[] breaks = {0, 1.97046, 6.91583, 11.9898, 13};
 
+Functor glass = new GlassFunction(); //functions, breaks
+
 
 //float secondDegreePolynomial(float x, float curvature, float b, float yOffset) {
 //  return curvature*x*x + b*x + yOffset;
@@ -144,7 +139,6 @@ float[] breaks = {0, 1.97046, 6.91583, 11.9898, 13};
 //}
 
 
-// potens function.
 
 // The integral section.
 
@@ -180,14 +174,19 @@ void renderAverageIntegral() {
   }
 }
 
-float averageIntegral() {
+float averageIntegral(float lowerBound, float upperBound) {
   float sum = 0;
-  for (float i = 0; i< MAX_FUNCTION_VALUE/precision; i++) {
-    q+= digits(max(MAX_FUNCTION_VALUE, precision))*digits(max(MAX_FUNCTION_VALUE, precision)) + digits(max(i, precision))*digits(max(i, precision)) + digits(max(precision*i, precision/2)) + digits(precision)*digits(precision) + digits(glassFunction(precision*i + precision/2))*digits(glassFunction(precision*i + precision/2)) ;
-    sum += glassFunction(precision*i + precision/2)*precision;
+  for (float x = lowerBound; x< upperBound; x+=precision) {
+
+    sum += glassFunction(x + precision/2)*precision;
   }
   return sum;
 }
+
+float averageIntegral() {
+  return averageIntegral(0, MAX_FUNCTION_VALUE);
+}
+
 
 void renderTrapezoidalIntegral() {
   for (float i = 0; i<20; i+=precision) {
@@ -195,14 +194,20 @@ void renderTrapezoidalIntegral() {
   }
 }
 
-float trapezoidalIntegral() {
+float trapezoidalIntegral(float lowerBound, float upperBound) {
   float sum = 0;
-  for (float i = 0; i<MAX_FUNCTION_VALUE/precision; i++) {
-    //q+= solve for complexety in future. 
-    sum += precision * (glassFunction((i*precision)+precision) + glassFunction(i*precision))/2;
+  for (float x = lowerBound; x< upperBound; x+=precision) {
+
+    sum += precision * (glassFunction((x)+precision) + glassFunction(x))/2;
   }
   return sum;
 }
+
+float trapezoidalIntegral() {
+  return trapezoidalIntegral(0, MAX_FUNCTION_VALUE);
+}
+
+
 
 void mousePressed() {
   if (mouseY >390 && mouseY <400 && mouseX < 1100 && mouseX >1000) { // related to show left
