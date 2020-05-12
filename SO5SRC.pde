@@ -142,7 +142,6 @@ println(integ.call(second,0.1,5,10));
 
 }
 
-
 //float functorLeftIntegral(Functor func, float precision, float lowerBound, float upperBound) {
 //  float sum = 0;
 //  for (float x = lowerBound; x<upperBound; x+=precision) {
