@@ -1,4 +1,4 @@
-float precision =4.0; // functionaly the same as \Delta x. precision = 3.81 *pow(10, -6);
+float precision =4.0; // the same as \Delta x.
 
 final float MAX_FUNCTION_VALUE = 13.0;
 final float EXPECTED_INTEGRAL = 35.6775400000;
@@ -20,27 +20,29 @@ void draw() {
   rotate(3*PI/2); // this makes cordinates to (y;x) instead.
   //println((mouseY) +" ; "+(mouseX));
   background(200);
-  cartesian();
-  grid();
+  //cartesian();
+  //grid();
   sidebar();
-  renderFunction();
+  //renderFunction();
 
   if (showLeft) {
-    renderLeftIntegral();
+    //renderLeftIntegral();
   }
   if (showAverage) {
-    renderAverageIntegral();
+    //renderAverageIntegral();
   }
   if (showTrapetz) {
-    renderTrapezoidalIntegral();
+    //renderTrapezoidalIntegral();
   }
 
   //time measuring system
-  int t = millis();
-  for (int c = 0; c<1000; c++) {
-    leftIntegral();
-  }
-  println(millis()-t);
+  //int t = millis();
+  //for (int c = 0; c<100; c++) {
+  //  //leftIntegral();
+  //  //averageIntegral();
+  //  //trapezoidalIntegral();
+  //}
+  //println(millis()-t);
 }
 
 void cartesian() {
@@ -187,7 +189,6 @@ float averageIntegral() {
   return averageIntegral(0, MAX_FUNCTION_VALUE);
 }
 
-
 void renderTrapezoidalIntegral() {
   for (float i = 0; i<20; i+=precision) {
     quad(0, i*50, 0, (i+precision)*50, glassFunction(i+precision)*50, (i+precision)*50, glassFunction(i)*50, (i)*50 );
@@ -206,8 +207,6 @@ float trapezoidalIntegral(float lowerBound, float upperBound) {
 float trapezoidalIntegral() {
   return trapezoidalIntegral(0, MAX_FUNCTION_VALUE);
 }
-
-
 
 void mousePressed() {
   if (mouseY >390 && mouseY <400 && mouseX < 1100 && mouseX >1000) { // related to show left
