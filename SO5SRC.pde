@@ -8,15 +8,20 @@ Integral rightInt = new RightIntegral();
 Integral traInt = new TrapetzIntegral();
 GlassFunction theGlass = new GlassFunction();
 
-float[] thirdDegreee = {7, -1, 9};
-
-Functor[] secondFunctionList = {};
-float[] secondBreakList = {};
-GlassFunction secondGlass = new GlassFunction(secondFunctionList, secondBreakList);
+//Functor[] secondFunctionList = {};
+//float[] secondBreakList = {};
+//GlassFunction secondGlass = new GlassFunction(secondFunctionList, secondBreakList);
 
 void setup() {
   size(1200, 1000);
   // scale is 1:50
+  
+  for(int i = 0; i<5; i++){
+    println(time(1000, 0, 1/pow(2,i))); 
+    println(time(1000, 3, 1/pow(2,i)));
+  }
+  
+  
 }
 
 void draw() {
@@ -93,6 +98,7 @@ void renderFunction() {
     pointA(x, theGlass.call(x));
   }
 }
+
 
 float time(int cycles, int methode, float precision) {
   //time measuring system
