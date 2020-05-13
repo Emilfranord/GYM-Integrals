@@ -41,7 +41,6 @@ class Exponential implements Functor {
   }
 }
 
-
 class SecondDegreePolynomial implements Functor {
   float curvature;
   float b;
@@ -118,15 +117,15 @@ class GlassFunction implements Functor {
 
 class Polynomial implements Functor {
   float[] coefficients;
-  
-  Polynomial(float[] coefficients){ // x^0 is index 0, x^1 is index 1.... 
+
+  Polynomial(float[] coefficients) { // x^0 is index 0, x^1 is index 1.... 
     this.coefficients = coefficients;
   }
-  
+
   float call(float x) {
     float sum =0;
-    for(int i =0; i<this.coefficients.length; i++){
-      sum += this.coefficients[i]* pow(x,i);
+    for (int i =0; i<this.coefficients.length; i++) {
+      sum += this.coefficients[i]* pow(x, i);
     }
     return sum;
   }
@@ -134,10 +133,6 @@ class Polynomial implements Functor {
 
 
 class Integral {
-  //float precision;
-  //Integral() {
-  //}
-
   float call(Functor func, float precision, float lowerBound, float upperBound) {
     float sum = 0;
     for (float x = lowerBound; x<upperBound; x+=precision) {
@@ -151,17 +146,11 @@ class Integral {
   }
 
   float call(GlassFunction glass, float precision) {
-    return call(glass, precision, glass.breaks[0], glass.breaks[breaks.length-1]);
+    return call(glass, precision, glass.breaks[0], glass.breaks[glass.breaks.length-1]);
   }
 }
 
 public class LeftIntegral extends Integral { // move the render functions to here, wednesday.
-
-  //LeftIntegral() {
-  //  super();
-  //}
-
-  //@Override
   float area(Functor func, float precision, float x) {
     return func.call(x)*precision;
   }
