@@ -63,9 +63,9 @@ class SecondDegreePolynomial implements Functor {
   }
 }
 
-float tangens(float x, float xOffset, float yOffset) {
-  return tan(x+xOffset)+yOffset;
-}
+//float tangens(float x, float xOffset, float yOffset) {
+//  return tan(x+xOffset)+yOffset;
+//}
 
 class Tangens implements Functor {
   float xOffset;
@@ -110,9 +110,9 @@ class GlassFunction implements Functor {
     return 0;
   }
 
-  float getBreak(int i) {
-    return this.breaks[i];
-  }
+  //float getBreak(int i) {
+  //  return this.breaks[i];
+  //}
 }
 
 class Polynomial implements Functor {
