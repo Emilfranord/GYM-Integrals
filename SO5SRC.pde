@@ -15,6 +15,8 @@ GlassFunction theGlass = new GlassFunction();
 void setup() {
   size(1200, 1000);
   // scale is 1:50
+
+  
 }
 
 void draw() {
@@ -91,7 +93,6 @@ void renderFunction() {
     pointA(x, theGlass.call(x));
   }
 }
-
 
 float time(int cycles, int methode, float precision) {
   //time measuring system
@@ -202,7 +203,7 @@ void sidebar() {  // shows all relavent data, and % error from the expected valu
   text("True: " +EXPECTED_INTEGRAL, 1020, -900);
 
   text("Left: "+ integralLeft + 
-    "\n %"+ (integralLeft- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -850);
+    "\n %"+ (integralLeft - EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -850);
 
   text("Right: "+ integralRight + 
     "\n %"+ (integralRight- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -800);
