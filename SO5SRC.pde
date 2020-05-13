@@ -15,13 +15,6 @@ GlassFunction theGlass = new GlassFunction();
 void setup() {
   size(1200, 1000);
   // scale is 1:50
-  
-  for(int i = 0; i<5; i++){
-    println(time(1000, 0, 1/pow(2,i))); 
-    println(time(1000, 3, 1/pow(2,i)));
-  }
-  
-  
 }
 
 void draw() {
@@ -124,9 +117,7 @@ float time(int cycels, int methode) {
   return time(cycels, methode, precision);
 }
 
-//float glassFunction(float x) { // uses call on the theGlass Functor. 
-//  return theGlass.call(x);
-//}
+// exampels of Functor objects.
 
 //Functor inverse = new Inverse(0.5, 1);
 //Functor exponential = new Exponential(1500, 0.4);
@@ -206,7 +197,7 @@ void sidebar() {  // shows all relavent data, and % error from the expected valu
 
   fill(0);
   rotate(-3*PI/2); // rotates the field to have left to right text.
-  text("Delta x: "+precision, 1020, -950);
+  text("\u0394x: "+precision, 1020, -950);
   //  text("# dots: "+22, 1020, -940); // change 22 to the real number.
   text("True: " +EXPECTED_INTEGRAL, 1020, -900);
 
