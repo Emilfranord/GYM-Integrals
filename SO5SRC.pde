@@ -1,5 +1,5 @@
 float precision = 4.0; // the same as \Delta x.
-final float EXPECTED_INTEGRAL = 808671.94823999;//35.6775400000;
+final float EXPECTED_INTEGRAL = 35.6775400000;
 boolean showLeft, showAverage, showTrapetz, showSimpsons;
 
 Integral leftInt = new LeftIntegral();
@@ -39,7 +39,7 @@ void draw() {
   }
 }
 
-void cartesian() { // 
+void cartesian() { // draws the axies and numbers.
   stroke(0);
   strokeWeight(4);
 
