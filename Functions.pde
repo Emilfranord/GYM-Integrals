@@ -1,5 +1,6 @@
 float tests(float j) {
   //tests of the math part of the function. 
+  // no longer functional
 
   if (j>0 && j<13.0) {
 
