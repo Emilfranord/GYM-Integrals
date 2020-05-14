@@ -1,5 +1,5 @@
 float precision = 4.0; // the same as \Delta x.
-final float EXPECTED_INTEGRAL = 35.6775400000;
+final float EXPECTED_INTEGRAL = 808671.94823999;//35.6775400000;
 boolean showLeft, showAverage, showTrapetz, showSimpsons;
 
 Integral leftInt = new LeftIntegral();
@@ -8,15 +8,13 @@ Integral rightInt = new RightIntegral();
 Integral traInt = new TrapetzIntegral();
 GlassFunction theGlass = new GlassFunction();
 
-//Functor[] secondFunctionList = {};
-//float[] secondBreakList = {};
-//GlassFunction secondGlass = new GlassFunction(secondFunctionList, secondBreakList);
+//float[] testBreaks = {10, 20}; // example
+//Functor[] testFunct = {new Exponential(600, 10)};
+//GlassFunction theGlass = new GlassFunction(testFunct,testBreaks);
 
 void setup() {
   size(1200, 1000);
   // scale is 1:50
-
-  
 }
 
 void draw() {
@@ -41,7 +39,7 @@ void draw() {
   }
 }
 
-void cartesian() {
+void cartesian() { // 
   stroke(0);
   strokeWeight(4);
 
@@ -62,7 +60,7 @@ void cartesian() {
   }
 }
 
-void grid() { // draws certical and horisontal lines every 50 pixels.
+void grid() { // draws vertical and horizontal lines every 50 pixels.
   stroke(100);
   strokeWeight(1);
   for (int i=0; i<40; i++) {
@@ -74,14 +72,14 @@ void grid() { // draws certical and horisontal lines every 50 pixels.
   }
 }
 
-void pointA(float x, float y) { // this reverses the problem caused by rotate.
-  pointA(x, y, #000000);
+void pointA(float x, float y) { 
+  pointA(x, y, #000000); // if no color is specified, use black
 }
 
-void pointA(float x, float y, color c) { 
+void pointA(float x, float y, color c) {
   strokeWeight(2);
   stroke(c);
-  point(y*50, x*50);
+  point(y*50, x*50); // this reverses the problem caused by rotate.
   stroke(100);
 }
 
@@ -115,7 +113,7 @@ float time(int cycles, int methode, float precision) {
 }
 
 float time(int cycels, int methode) {
-  return time(cycels, methode, precision);
+  return time(cycels, methode, precision); // less specific case that uses the global precision
 }
 
 // exampels of Functor objects.
