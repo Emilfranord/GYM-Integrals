@@ -6,6 +6,7 @@ Integral leftInt = new LeftIntegral();
 Integral averageInt = new AverageIntegral();
 Integral rightInt = new RightIntegral();
 Integral traInt = new TrapetzIntegral();
+Integral simpKeperInt = new SimpsonsIntegral();
 GlassFunction theGlass = new GlassFunction();
 
 //float[] testBreaks = {10, 20}; // example
@@ -92,8 +93,9 @@ void renderFunction() {
   }
 }
 
+//time measuring system
 float time(int cycles, int methode, float precision) {
-  //time measuring system
+
   int t = millis();
   for (int c = 0; c<cycles; c++) {
     if (methode == 0) {
@@ -107,6 +109,9 @@ float time(int cycles, int methode, float precision) {
     }
     if (methode == 3) {
       traInt.call(theGlass, precision);
+    }
+    if(methode == 4){
+    simpKeperInt.call(theGlass, precision);
     }
   }
   return (millis()-t)/cycles; // returns the time it takes to do one function.
@@ -156,7 +161,7 @@ void renderTrapezoidalIntegral() {
   }
 }
 
-// sidebar controll 
+// sidebar control
 void mousePressed() {
   if (mouseY >390 && mouseY <400 && mouseX < 1100 && mouseX >1000) { // related to show left
     showLeft = true;
@@ -193,6 +198,8 @@ void sidebar() {  // shows all relavent data, and % error from the expected valu
   float integralRight = rightInt.call(theGlass, precision);
   float integralAver = averageInt.call(theGlass, precision);
   float integralTrap = traInt.call(theGlass, precision);
+  float integralSimp = simpKeperInt.call(theGlass, precision);
+  //println(integralSimp);
 
   fill(0);
   rotate(-3*PI/2); // rotates the field to have left to right text.
