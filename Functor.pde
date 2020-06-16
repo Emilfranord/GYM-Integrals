@@ -63,9 +63,7 @@ class SecondDegreePolynomial implements Functor {
   }
 }
 
-//float tangens(float x, float xOffset, float yOffset) {
-//  return tan(x+xOffset)+yOffset;
-//}
+
 
 class Tangens implements Functor {
   float xOffset;
@@ -109,10 +107,6 @@ class GlassFunction implements Functor {
     }
     return 0;
   }
-
-  //float getBreak(int i) {
-  //  return this.breaks[i];
-  //}
 }
 
 class Polynomial implements Functor {
@@ -150,7 +144,7 @@ class Integral {
   }
 }
 
-public class LeftIntegral extends Integral { // move the render functions to here, wednesday.
+public class LeftIntegral extends Integral {
   float area(Functor func, float precision, float x) {
     return func.call(x)*precision;
   }
@@ -164,7 +158,6 @@ public class RightIntegral extends Integral {
 
 public class AverageIntegral extends Integral {
 
-  //@Override
   float area(Functor func, float precision, float x) {
     return func.call(x + precision/2)*precision;
   }
@@ -172,7 +165,6 @@ public class AverageIntegral extends Integral {
 
 public class TrapetzIntegral extends Integral {
 
-  //@Override
   float area(Functor func, float precision, float x) {
     return precision * (func.call((x)+precision) + func.call(x))/2;
   }
@@ -180,6 +172,8 @@ public class TrapetzIntegral extends Integral {
 
 public class SimpsonsIntegral extends Integral {
   float area(Functor func, float precision, float x) {
-    return 0;
+    float a = x; float  b = a+precision; 
+    
+  return (b-a)/(6) * (func.call(a) + 4* func.call((a+b)/2) + func.call(b));
   }
 } 
