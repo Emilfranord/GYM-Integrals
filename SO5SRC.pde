@@ -82,57 +82,46 @@ void pointA(float x, float y, color c) {
 
 // the function section.
 void renderFunction() {
+  renderFunction(theGlass);
+}
+
+void renderFunction(Functor f){
   strokeWeight(1);
   stroke(0);
   for (float x = 0; x<20; x+=precision) {
-    pointA(x, theGlass.call(x));
+    pointA(x, f.call(x));
   }
 }
 
 //time measuring system
-float time(int cycles, int methode, float precision) {
-
+float time(int cycles, Integral methode, float precision) {
   int t = millis();
   for (int c = 0; c<cycles; c++) {
-    if (methode == 0) {
-      leftInt.call(theGlass, precision);
-    }
-    if (methode == 1) {
-      averageInt.call(theGlass, precision);
-    }
-    if (methode == 2) {
-      rightInt.call(theGlass, precision);
-    }
-    if (methode == 3) {
-      traInt.call(theGlass, precision);
-    }
-    if(methode == 4){
-    simpKeperInt.call(theGlass, precision);
-    }
+    method.call(theGlass, precision);
   }
   return (millis()-t)/cycles; // returns the time it takes to do one function.
 }
 
-float time(int cycels, int methode) {
+float time(int cycels, Integral methode) {
   return time(cycels, methode, precision); // less specific case that uses the global precision
 }
 
 // The integral rendering section.
-void renderLeftIntegral() {
+void renderLeftIntegral(Functor f) {
   for (float i = 0; i<20; i+=precision) {
-    rect(theGlass.call(i)*50, i*50, -theGlass.call(i)*50, precision*50);
+    rect(f.call(i)*50, i*50, -f.call(i)*50, precision*50);
   }
 }
 
-void renderAverageIntegral() {
+void renderAverageIntegral(Functor f) {
   for (float i = 0; i<20; i+=precision) {
-    rect(0, i*50, theGlass.call(i+precision/2)*50, precision*50);
+    rect(0, i*50, f.call(i+precision/2)*50, precision*50);
   }
 }
 
-void renderTrapezoidalIntegral() {
+void renderTrapezoidalIntegral(functor f) {
   for (float i = 0; i<20; i+=precision) {
-    quad(0, i*50, 0, (i+precision)*50, theGlass.call(i+precision)*50, (i+precision)*50, theGlass.call(i)*50, (i)*50 );
+    quad(0, i*50, 0, (i+precision)*50, f.call(i+precision)*50, (i+precision)*50, f.call(i)*50, (i)*50 );
   }
 }
 
@@ -168,31 +157,28 @@ void mousePressed() {
 
 // sidebar rendering
 
-void sidebar() {  // shows all relavent data, and % error from the expected value. 
-  float integralLeft = leftInt.call(theGlass, precision);
-  float integralRight = rightInt.call(theGlass, precision);
-  float integralAver = averageInt.call(theGlass, precision);
-  float integralTrap = traInt.call(theGlass, precision);
-  float integralSimp = simpKeperInt.call(theGlass, precision);
-  //println(integralSimp);
+void sidebar(Functor f) {  // shows all relavent data, and % error from the expected value. 
+  float integralLeft = leftInt.call(f, precision);
+  float integralRight = rightInt.call(f, precision);
+  float integralAver = averageInt.call(f, precision);
+  float integralTrap = traInt.call(f, precision);
+  float integralSimp = simpKeperInt.call(f, precision);
 
   fill(0);
   rotate(-3*PI/2); // rotates the field to have left to right text.
   text("\u0394x: "+precision, 1020, -950);
-  //  text("# dots: "+22, 1020, -940); // change 22 to the real number.
   text("True: " +EXPECTED_INTEGRAL, 1020, -900);
 
-  text("Left: "+ integralLeft + 
-    "\n %"+ (integralLeft - EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -850);
+  String format = "%s: %d \n %% %d"
+  String left = String.join(format,"Left", integralLeft, (integralLeft - EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL);
+  String right = String.join(format,"Right", integralRight, (integralRight - EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL);
+  String ave = String.join(format,"Average", integralAver, (integralAver - EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL);
+  String trap = String.join(format,"Trapezoidal", integralTrap, (integralTrap - EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL);
 
-  text("Right: "+ integralRight + 
-    "\n %"+ (integralRight- EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -800);
-
-  text("Average: "+integralAver+ 
-    "\n %"+ (integralAver - EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -750);
-
-  text("Trapezoidal: "+integralTrap+ 
-    "\n %"+ (integralTrap - EXPECTED_INTEGRAL)/ EXPECTED_INTEGRAL, 1020, -700);
+  text(left, 1020, -850);
+  text(right, 1020, -800);
+  text(ave, 1020, -750);
+  text(trap, 1020, -700);
 
   text("Show Left", 1020, -600);
   text("Show Average", 1020, -550); 
