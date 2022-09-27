@@ -9,10 +9,6 @@ Integral traInt = new TrapetzIntegral();
 Integral simpKeperInt = new SimpsonsIntegral();
 GlassFunction theGlass = new GlassFunction();
 
-//float[] testBreaks = {10, 20}; // example
-//Functor[] testFunct = {new Exponential(600, 10)};
-//GlassFunction theGlass = new GlassFunction(testFunct,testBreaks);
-
 void setup() {
   size(1200, 1000);
   // scale is 1:50
@@ -120,27 +116,6 @@ float time(int cycles, int methode, float precision) {
 float time(int cycels, int methode) {
   return time(cycels, methode, precision); // less specific case that uses the global precision
 }
-
-// exampels of Functor objects.
-
-//Functor inverse = new Inverse(0.5, 1);
-//Functor exponential = new Exponential(1500, 0.4);
-//Functor secondDegreePolynomial = new SecondDegreePolynomial(-1, 19, -82.5);
-//Functor tangens = new Tangens(1, 1.1);
-//Functor[] functions = {new Inverse(0.5, 1), new Exponential(1500, 0.4), new SecondDegreePolynomial(-1, 19, -82.5), new Tangens(1, 1.1)};
-//float[] breaks = {0, 1.97046, 6.91583, 11.9898, 13};
-
-//float[] second = {-82.5, 19.0, -1.0};
-//float[] fourth = {5,7,7,8};
-
-//Functor[] functions = {}; 
-//Functor[] functions = {new Inverse(0.5, 1), new Exponential(1500, 0.4), new SecondDegreePolynomial(-1, 19, -82.5), new Tangens(1, 1.1)};
-// lists the order the functions will be in and their arguments/ parameters 
-//float[] breaks = {0, 1.97046, 6.91583, 11.9898, 13};
-// lists for what values of x the functions will be defined. the upper bound and lower bound is shared between two adjesent functions. 
-
-//Functor glass = new GlassFunction(functions, breaks); //functions, breaks, using specific arrays
-//Functor glass = new GlassFunction(); //functions, breaks, using default cases 
 
 // The integral rendering section.
 void renderLeftIntegral() {
